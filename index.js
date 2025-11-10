@@ -1,3 +1,20 @@
+// Burger menu toggle
+const burgerMenu = document.querySelector(".burger-menu");
+const navMenu = document.querySelector(".nav-menu");
+
+burgerMenu.addEventListener("click", () => {
+  burgerMenu.classList.toggle("active");
+  navMenu.classList.toggle("active");
+});
+
+// Close menu when clicking on a link
+document.querySelectorAll(".nav-menu a").forEach((link) => {
+  link.addEventListener("click", () => {
+    burgerMenu.classList.remove("active");
+    navMenu.classList.remove("active");
+  });
+});
+
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", function (e) {
@@ -58,11 +75,16 @@ function updateActiveNav() {
 
 window.addEventListener("scroll", updateActiveNav);
 
-// Create tooltip element
+// Create tooltip element (only for desktop)
 const tooltip = document.createElement("div");
 tooltip.className = "glitch-tooltip";
 tooltip.textContent = "DON'T BE AFFRAID, CLICK IT";
 document.body.appendChild(tooltip);
+
+// Check if device is mobile
+function isMobile() {
+  return window.innerWidth <= 768;
+}
 
 // Add glitch effect on hover for project cards
 const projectCards = document.querySelectorAll(".project-card");
@@ -70,12 +92,18 @@ const projectCards = document.querySelectorAll(".project-card");
 projectCards.forEach((card) => {
   card.addEventListener("mouseenter", function () {
     this.style.animation = "glitch 0.3s ease";
-    tooltip.style.opacity = "1";
+    // Only show tooltip on desktop
+    if (!isMobile()) {
+      tooltip.style.opacity = "1";
+    }
   });
 
   card.addEventListener("mousemove", function (e) {
-    tooltip.style.left = e.pageX + 20 + "px";
-    tooltip.style.top = e.pageY + 20 + "px";
+    // Only track mouse on desktop
+    if (!isMobile()) {
+      tooltip.style.left = e.pageX + 20 + "px";
+      tooltip.style.top = e.pageY + 20 + "px";
+    }
   });
 
   card.addEventListener("mouseleave", function () {
@@ -85,6 +113,13 @@ projectCards.forEach((card) => {
   card.addEventListener("animationend", function () {
     this.style.animation = "";
   });
+});
+
+// Hide tooltip on window resize if mobile
+window.addEventListener("resize", () => {
+  if (isMobile()) {
+    tooltip.style.opacity = "0";
+  }
 });
 
 // Add glitch animation to CSS dynamically
@@ -133,8 +168,11 @@ console.log(
   "color: #fff; font-size: 12px;"
 );
 
-// Add keyboard shortcuts
+// Add keyboard shortcuts (desktop only)
 document.addEventListener("keydown", function (e) {
+  // Only enable keyboard shortcuts on desktop
+  if (isMobile()) return;
+
   // Press 'C' to scroll to contact
   if (e.key === "c" || e.key === "C") {
     if (!e.target.matches("input, textarea")) {
@@ -150,7 +188,9 @@ document.addEventListener("keydown", function (e) {
   // Press 'P' to scroll to projects
   if (e.key === "p" || e.key === "P") {
     if (!e.target.matches("input, textarea")) {
-      document.querySelector("#projects").scrollIntoView({ behavior: "smooth" });
+      document
+        .querySelector("#projects")
+        .scrollIntoView({ behavior: "smooth" });
     }
   }
 
@@ -165,7 +205,7 @@ document.addEventListener("keydown", function (e) {
 // Add a warning banner effect (optional - can be removed)
 window.addEventListener("load", function () {
   console.log(
-    "%c⚠️ SECURITY NOTICE",
+    "%c[!] SECURITY NOTICE",
     "color: #ff0000; font-size: 16px; font-weight: bold;"
   );
   console.log(

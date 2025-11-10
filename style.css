@@ -37,6 +37,36 @@ nav {
     letter-spacing: -2px;
 }
 
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 101;
+}
+
+.burger-menu span {
+    width: 25px;
+    height: 3px;
+    background: #fff;
+    margin: 3px 0;
+    transition: all 0.3s;
+}
+
+.burger-menu.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+}
+
+.burger-menu.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-menu.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
 nav ul {
     list-style: none;
     display: flex;
@@ -343,17 +373,18 @@ footer {
 .social-box {
     background: #ff0000;
     color: #fff;
-    padding: 1rem 1.5rem;
+    padding: 0.7rem 1.2rem;
     text-decoration: none;
     font-weight: bold;
-    border: 4px solid #ff0000;
+    border: 3px solid #ff0000;
     transition: all 0.1s;
-    box-shadow: 4px 4px 0 #fff;
+    box-shadow: 3px 3px 0 #fff;
+    font-size: 0.9rem;
 }
 
 .social-box:hover {
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0 #fff;
+    box-shadow: 1px 1px 0 #fff;
 }
 
 .footer-text {
@@ -368,18 +399,49 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .hero h1 {
-        font-size: 3rem;
-        letter-spacing: -2px;
+    .logo {
+        font-size: 1.3rem;
     }
 
-    nav ul {
-        gap: 0;
+    .burger-menu {
+        display: flex;
+    }
+
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: #000;
+        width: 100%;
+        text-align: center;
+        transition: left 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+        border-top: 3px solid #ff0000;
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-menu li {
+        margin: 0;
     }
 
     nav a {
-        padding: 0.5rem 1rem;
-        font-size: 0.9rem;
+        padding: 1.5rem;
+        border-left: none;
+        border-bottom: 2px solid #ff0000;
+    }
+
+    .nav-shortcut {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        letter-spacing: -2px;
+        padding: 1.5rem;
     }
 
     h2 {
@@ -400,7 +462,15 @@ footer {
         text-align: center;
     }
 
+    .social-links {
+        justify-content: center;
+    }
+
     section {
         padding: 4rem 0;
+    }
+
+    .contact-form {
+        padding: 2rem;
     }
 }
